@@ -28,6 +28,10 @@ def test_concurrent_requests():
     # Printing the respective times
     print("Time taken for single request : ".format(time_elapsed))
     print("Time taken for concurrent {} requests : ".format(request_count, con_time_elapsed))
-    concurrency_rate = (con_time_elapsed/time_elapsed)      # Rate of concurrent requests getting processed
+    con_per_request = (con_time_elapsed/request_count)      # Average time taken by each request in concurrency call
+    concurrency_rate = (con_per_request/time_elapsed)      # Rate of concurrent requests getting processed
     logging.info("Concurrency Rate : {}".format(concurrency_rate))
-    assert concurrency_rate > 2
+    time_for_serial_calls = time_elapsed * request_count
+    threads = time_for_serial_calls / con_time_elapsed
+    print("Thread count : {}".format(threads))
+    assert threads > 2
